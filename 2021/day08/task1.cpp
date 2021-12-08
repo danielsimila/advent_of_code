@@ -12,7 +12,7 @@ int main()
     ifstream file{"test.txt"};
     string line{};
     string var{};
-    map<int, int> output{}; 
+    map<int, int> output{};
 
     while (getline(file, line, '|'))
     {
@@ -26,7 +26,7 @@ int main()
 
     int count{output[2] + output[3] + output[4] + output[7]};
 
-    cout << "Answer Part 1: " << count  << endl;
+    cout << "Answer Part 1: " << count << endl;
 
     return 0;
 }

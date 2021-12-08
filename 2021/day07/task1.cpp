@@ -10,13 +10,13 @@ int main()
 {
     ifstream file{"input.txt"};
     string line{};
-    getline(file,line);
+    getline(file, line);
 
-    map<int,int> numbers{};
+    map<int, int> numbers{};
 
     stringstream ss{line};
     int var{};
-    char trash; 
+    char trash;
     int max{};
     while (ss >> var >> trash)
     {

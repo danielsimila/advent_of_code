@@ -14,24 +14,23 @@ int main()
     string line{};
     string var{};
 
-
     int total_sum{};
     bool search{true};
     while (search)
     {
         vector<string> input{};
-        vector<string> output{}; 
+        vector<string> output{};
 
         while (getline(file, line, '|'))
         {
-            // Input handling: 
+            // Input handling:
             stringstream ss1{line};
             while (ss1 >> var)
             {
                 input.push_back(var);
             }
 
-            // Output handling: 
+            // Output handling:
             getline(file, line);
             stringstream ss2{line};
             while (ss2 >> var)
@@ -41,15 +40,19 @@ int main()
             break;
         }
 
-        transform(begin(input), end(input), begin(input), 
-            [](string s) {
-                sort(begin(s),end(s)); 
-                return s; } );
-        sort(begin(input), end(input));
-        transform(begin(output), end(output), begin(output), 
-            [](string s) {
-                sort(begin(s),end(s)); 
-                return s; } );
+        // Sorting words in alphabetical order:
+        transform(begin(input), end(input), begin(input),
+                  [](string s)
+                  {
+                      sort(begin(s), end(s));
+                      return s;
+                  });
+        transform(begin(output), end(output), begin(output),
+                  [](string s)
+                  {
+                      sort(begin(s), end(s));
+                      return s;
+                  });
 
         map<int, string> coupled{};
         vector<string> input_left{input};
@@ -133,6 +136,7 @@ int main()
                 coupled[0] = s;
                 auto it{remove(begin(input_left), end(input_left), s)};
                 input_left.erase(it, end(input_left));
+                break;
             }
         }
 
@@ -140,7 +144,7 @@ int main()
         for (string s : input_left)
         {
             string tmp{s};
-            for (char c : (coupled[7]+coupled[4]))
+            for (char c : (coupled[7] + coupled[4]))
             {
                 auto it{remove(begin(tmp), end(tmp), c)};
                 tmp.erase(it, end(tmp));
@@ -150,6 +154,7 @@ int main()
                 coupled[2] = s;
                 auto it{remove(begin(input_left), end(input_left), s)};
                 input_left.erase(it, end(input_left));
+                break;
             }
         }
 
@@ -167,6 +172,7 @@ int main()
                 coupled[9] = s;
                 auto it{remove(begin(input_left), end(input_left), s)};
                 input_left.erase(it, end(input_left));
+                break;
             }
         }
 
@@ -179,6 +185,7 @@ int main()
                 coupled[5] = s;
                 auto it{remove(begin(input_left), end(input_left), s)};
                 input_left.erase(it, end(input_left));
+                break;
             }
         }
 
@@ -190,10 +197,10 @@ int main()
             {
                 if (ss.second == s)
                 {
-                    sum += ss.first*factor;
+                    sum += ss.first * factor;
                 }
             }
-            factor = factor/10;
+            factor = factor / 10;
         }
 
         total_sum += sum;
@@ -202,8 +209,16 @@ int main()
             search = false;
         }
     }
-    
-    cout << "Answer: " << total_sum << endl;
+
+    std::cout << "Answer: " << total_sum << endl;
+    if (total_sum == 1091609)
+    {
+        std::cout << "Correct! (if running with input.txt)" << endl;
+    }
+    else
+    {
+        std::cerr << "WRONG! (if running with input.txt)" << endl;
+    }
 
     return 0;
 }
