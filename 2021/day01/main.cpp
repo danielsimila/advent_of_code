@@ -45,7 +45,7 @@ int main()
                 tmp = "(increased)";
                 no_of_increases += 1;
             }
-            else 
+            else
             {
                 tmp = "(decreased)";
             }
@@ -54,7 +54,8 @@ int main()
         cout << i << ' ' + tmp << endl;
     }
 
-    cout << '\n' << "There are " << no_of_increases << " increases." << endl;
+    cout << '\n'
+         << "There are " << no_of_increases << " increases." << endl;
 
-    return 0; 
+    return 0;
 }
