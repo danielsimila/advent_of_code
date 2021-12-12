@@ -61,70 +61,54 @@ int main()
     }
 
     // visited caves
-    stack<vector<Cave *>> path;
-    path.push(vector<Cave *>{&cavesystem["start"]});
+    stack<pair<Cave *, map<string, int>>> path;
+    map<string, int> visits{};
+    visits["start"] += 1;
+    path.push(pair<Cave *, map<string, int>>{&cavesystem["start"], visits});
 
     int sum{};
     while (!path.empty())
     {
-        vector<Cave *> visited{path.top()};
-        Cave *current{visited.back()};
+        map<string, int> visited{path.top().second};
+        Cave *current{path.top().first};
         path.pop();
 
         if (current->name == "end")
         {
             sum += 1;
+            continue;
         }
+
         for (auto next : current->connections)
         {
-            bool already_visited{false};
-            int times_visited{};
-            times_visited = count_if(begin(visited), end(visited),
-                                     [&next](Cave *vis)
-                                     {
-                                         return (vis->name == next->name);
-                                     });
-
-            // Checking if any small cave visited twice:
-            map<string, int> visits{};
-            for (auto ptr : visited)
+            if (!next->big_cave)
             {
-                if (!ptr->big_cave)
+                int times_visited{visited[next->name]};
+                // start/goal
+                if ((times_visited >= 1) and (next->start_end))
                 {
-                    visits[ptr->name] += 1;
+                    continue;
+                }
+
+                for (auto p : visited)
+                {
+                    if ((p.second >= 2) and (!isupper(p.first[0])))
+                    {
+                        times_visited += 1;
+                        break;
+                    }
+                }
+                // Small caves
+                if (times_visited >= 2)
+                {
+                    continue;
                 }
             }
-            int max_visits{};
-            for (auto p : visits)
-            {
-                if (p.second > max_visits)
-                {
-                    max_visits = p.second;
-                }
-            }
-            int correction{};
-            if (max_visits == 2)
-            {
-                correction = 1;
-            }
 
-            // Small caves:
-            if ((times_visited >= 2 - correction) and (!next->big_cave))
-            {
-                already_visited = true;
-            }
-            // Start or goal:
-            if ((times_visited >= 1) and (next->start_end))
-            {
-                already_visited = true;
-            }
-
-            if (!already_visited)
-            {
-                vector<Cave *> tmp{visited};
-                tmp.push_back(next);
-                path.push(tmp);
-            }
+            visited[next->name] += 1;
+            path.push(pair<Cave *, map<string, int>>{
+                next, visited});
+            visited[next->name] += -1;
         }
     }
 

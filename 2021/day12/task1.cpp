@@ -21,7 +21,7 @@ public:
 
 int main()
 {
-    ifstream file{"test1.txt"};
+    ifstream file{"input.txt"};
     string line{};
     string cave1{};
     string cave2{};
@@ -61,41 +61,41 @@ int main()
     }
 
     // visited caves
-    stack<vector<Cave *>> path;
-    path.push(vector<Cave *>{&cavesystem["start"]});
+    stack<pair<Cave *, map<string, int>>> path;
+    map<string, int> visits{};
+    visits["start"] += 1;
+    path.push(pair<Cave *, map<string, int>>{&cavesystem["start"], visits});
 
     int sum{};
     while (!path.empty())
     {
-        vector<Cave *> visited{path.top()};
-        Cave *current{visited.back()};
+        map<string, int> visited{path.top().second};
+        Cave *current{path.top().first};
         path.pop();
 
         if (current->name == "end")
         {
             sum += 1;
+            continue;
         }
+
         for (auto next : current->connections)
         {
-            bool already_visited{false};
-            int times_visited{};
-            times_visited = count_if(begin(visited), end(visited),
-                                     [&next](Cave *vis)
-                                     {
-                                         return (vis->name == next->name);
-                                     });
-            // Small caves:
-            if ((times_visited >= 1) and (!next->big_cave))
+            if (!next->big_cave)
             {
-                already_visited = true;
+                int times_visited{visited[next->name]};
+
+                // Small caves
+                if (times_visited >= 1)
+                {
+                    continue;
+                }
             }
 
-            if (!already_visited)
-            {
-                vector<Cave *> tmp{visited};
-                tmp.push_back(next);
-                path.push(tmp);
-            }
+            visited[next->name] += 1;
+            path.push(pair<Cave *, map<string, int>>{
+                next, visited});
+            visited[next->name] += -1;
         }
     }
 
