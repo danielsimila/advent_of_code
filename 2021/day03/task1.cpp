@@ -15,11 +15,11 @@ int main()
     int total{};
     vector<int> sums(12, 0);
 
-    while (getline(file,line))
+    while (getline(file, line))
     {
         istringstream ss(line);
         for (uint i{0}; i < sums.size(); i++)
-        {   
+        {
             ss >> tmp;
             sums[i] += tmp - '0';
         }
@@ -29,18 +29,18 @@ int main()
 
     for (uint i{0}; i < sums.size(); i++)
     {
-        sums[i] = sums[i] > (total-sums[i]); 
+        sums[i] = sums[i] > (total - sums[i]);
     }
 
     double gamma{};
     double epsilon{};
     for (uint i{0}; i < sums.size(); i++)
     {
-        gamma += sums[i]*pow((2*sums[i]),(sums.size()-1-i));
-        epsilon += !sums[i]*pow((2*!sums[i]),(sums.size()-1-i));
+        gamma += sums[i] * pow((2 * sums[i]), (sums.size() - 1 - i));
+        epsilon += !sums[i] * pow((2 * !sums[i]), (sums.size() - 1 - i));
     }
 
-    cout << "Power consumption: " << int(gamma*epsilon) << endl;
+    cout << "Power consumption: " << int(gamma * epsilon) << endl;
     cout << "gamma: " << gamma << endl;
     cout << "epsilon: " << epsilon << endl;
 
