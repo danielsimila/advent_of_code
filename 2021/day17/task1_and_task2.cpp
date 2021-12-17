@@ -49,8 +49,8 @@ int main()
         ss >> bin >> bin >> bin >> ymin;
         ss >> bin >> bin >> ymax;
     }
-    int vxmin{int(ceil(0.5 * (sqrt(8 * xmin + 1) - 1)))};
-    int vxmax{xmax};
+    int vxmin{int(ceil(0.5 * (sqrt(8 * xmin + 1) - 1)))}; // *note
+    int vxmax{xmax};                                      // *note
 
     std::cout << "X  limits: " << xmin << ", " << xmax << endl;
     std::cout << "Y  limits: " << ymin << ", " << ymax << endl;
@@ -59,10 +59,10 @@ int main()
     vector<int> maxheight{};
     for (int vyinit{-100}; vyinit < 100; vyinit++) // [-100, 100] is an assumption
     {
-        for (int vxinit{vxmin}; vxinit <= vxmax; vxinit++)
+        for (int vxinit{vxmin}; vxinit <= vxmax; vxinit++) // *note: assumes positive dx from start->goal
         {
-            int x{};
-            int y{};
+            int x{0};
+            int y{0};
             int vx{vxinit};
             int vy{vyinit};
             int y_max{y};
@@ -85,7 +85,7 @@ int main()
                 }
 
                 // Breaks if we have passed the goal
-                if (y < ymin)
+                if ((y < ymin) or (x > xmax))
                 {
                     break;
                 }
