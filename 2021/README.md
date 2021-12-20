@@ -20,7 +20,7 @@ C++ solutions to AoC 2021. Learning C++!
 - [x] Day 17
 - [ ] Day 18
 - [x] Day 19
-- [ ] Day 20
+- [x] Day 20
 - [ ] Day 21
 - [ ] Day 22
 - [ ] Day 23
