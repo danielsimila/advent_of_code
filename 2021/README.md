@@ -24,6 +24,6 @@ C++ solutions to AoC 2021. Learning C++! A chackmark indicates that the day is "
 - [x] Day 21 ⭐⭐
 - [x] Day 22 ⭐
 - [x] Day 23 ⭐
-- [ ] Day 24 
+- [x] Day 24 ⭐⭐
 - [x] Day 25 ⭐
 
